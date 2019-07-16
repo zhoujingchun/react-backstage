@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+
+ function   parseStatus(value){
+        console.log(value)
+        switch (value) {
+            case "原料待定":
+                return [0,0];
+                break;
+            case  "原料":
+                return [0,1];
+                break;
+            case "粗料待定":
+                return [1,0];
+                break;
+            case "粗料":
+                return [1,1];
+            case "今日粗料":
+                return [1,1];
+                break;
+            case "细料待定":
+                return [2,0];
+                break;
+            case  "细料":
+                return [2,1];
+                break;
+            case  "不可上线":
+                return [2,2];
+                break;
+            case  "预上线":
+                return [2,3];
+                break;
+            default:
+                return [3,3]
+
+        }
+
+    }
+    console.log(parseStatus("粗料"))
+    console.log(parseStatus("原料待定"))
+    console.log(parseStatus("预上线"))
+    console.log(parseStatus("不可上线"))
+</script>
+
+</body>
+</html>

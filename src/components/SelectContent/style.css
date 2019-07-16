@@ -1,0 +1,25 @@
+
+.select-title{
+    display: flex;
+}
+
+.select-title-type{
+    float: left;
+    margin-left: 1px;
+    color: rgba(0, 0, 0, 0.45);
+    flex-grow: 0;
+
+}
+.select-title-value{
+    float: left;
+    margin-left: 260px;
+    color: rgba(0, 0, 0, 0.45);
+    width: 200px;
+    flex-grow: 0;
+
+}
+.select-content{
+    clear: both;
+    display: flex;
+}
+
