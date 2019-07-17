@@ -155,7 +155,7 @@ class SelectConten extends Component {
     }
 
     getListByStatus(page,value){
-        axios.get('/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
+        axios.get(' http://api-evo-admin.mars-health.com/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
             //console.log(res.data.data)
             return res.data.data
         }).then(data => {
@@ -213,7 +213,7 @@ class SelectConten extends Component {
 
 
         let value = this.parseStatus(currentValue);
-        axios.put('/raw-post-update-status', {
+        axios.put(' http://api-evo-admin.mars-health.com/raw-post-update-status', {
             type: value[0],
             status: value[1],
             id:selectedRowKeys
@@ -229,7 +229,7 @@ class SelectConten extends Component {
          console.log(e.target.value) //输入时匹配后台数据
         let tags=e.target.value
 
-        axios.get('/raw-post-search-by-tags/?tags='+tags).then(res=>{
+        axios.get(' http://api-evo-admin.mars-health.com/raw-post-search-by-tags/?tags='+tags).then(res=>{
          console.log(res)
         })
 
@@ -256,7 +256,7 @@ class SelectConten extends Component {
         //获取id 数组
 
        console.log(id)
-        axios.put('/raw-post-update-status', {
+        axios.put(' http://api-evo-admin.mars-health.com/raw-post-update-status', {
             type: value[0],
             status: value[1],
             id:selectedRowKeys

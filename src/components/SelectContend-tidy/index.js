@@ -91,7 +91,7 @@ class SelectConten extends Component {
         console.log(value);
 
 
-        axios.get('/search_status?page=' + page + '&type=' + value[0] + "&status=" + value[1]).then(res => {
+        axios.get(' http://api-evo-admin.mars-health.com/search_status?page=' + page + '&type=' + value[0] + "&status=" + value[1]).then(res => {
             //console.log(res.data.data)
             return res.data.data
         }).then(data => {
@@ -167,7 +167,7 @@ class SelectConten extends Component {
         value = this.parseStatus(value);
 
 
-        axios.get('/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
+        axios.get(' http://api-evo-admin.mars-health.com/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
             //console.log(res.data.data)
             return res.data.data
         }).then(data => {
@@ -223,7 +223,7 @@ class SelectConten extends Component {
         }
 
         let value = this.parseStatus(currentValue);
-        axios.put('/raw-post-update-status', {
+        axios.put(' http://api-evo-admin.mars-health.com/raw-post-update-status', {
             type: value[0],
             status: value[1],
             id: selectedRowKeys

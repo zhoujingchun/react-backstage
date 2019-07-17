@@ -1,6 +1,7 @@
 import { Upload, Icon, Modal } from 'antd';
 import React, {Component} from 'react';
 import axios from "axios"
+import './style.css'
 function getBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -53,7 +54,7 @@ class PicturesWall extends React.Component {
         }
         console.log(lastList);
 
-        axios.put('/raw-post-up-pic',{
+        axios.put(' http://api-evo-admin.mars-health.com/raw-post-up-pic',{
             filename:"F",
             filepath:"f"
         }).then(res=>{

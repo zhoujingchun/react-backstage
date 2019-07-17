@@ -13,6 +13,14 @@
 
 
 }
-.ant-upload-list-item-actions i{
-    display: none;
+
+.ant-upload-list-item-thumbnail{
+    width: 129% !important;
 }
+
+.ant-upload-list-picture-card .ant-upload-list-item-thumbnail, .ant-upload-list-picture-card .ant-upload-list-item-thumbnail img {
+    display: block;
+    width: 125%;
+    height: 100%;
+    position: static
+;}

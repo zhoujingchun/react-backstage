@@ -17,7 +17,7 @@ class EditableTagGroup extends React.Component {
         let id=this.props.id;
         //console.log(removedTag)
 
-       axios.delete("/raw-post-delete-tags/?id="+id+"&tag="+removedTag).then(res=>{
+       axios.delete(" http://api-evo-admin.mars-health.com/raw-post-delete-tags/?id="+id+"&tag="+removedTag).then(res=>{
            console.log(res)
        }).then(()=>{
      console.log(this.props.tags);
@@ -45,7 +45,7 @@ class EditableTagGroup extends React.Component {
             tags = [...tags, inputValue];
         }
 
-        axios.put("/raw-post-update-tags", {
+        axios.put(" http://api-evo-admin.mars-health.com/raw-post-update-tags", {
             id: id,
             tag:inputValue
         }).then(res => {

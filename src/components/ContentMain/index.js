@@ -9,7 +9,7 @@ const Home = LoadableComponent(()=>import('../../routes/Home/index'))  //参数�
 const ButtonDemo = LoadableComponent(()=>import('../../routes/General/ButtonDemo/index'))
 const IconDemo = LoadableComponent(()=>import('../../routes/General/IconDemo/index'))
 
-//导航组件Demo
+//内容生产
 const DropdownDemo = LoadableComponent(()=>import('../../routes/ContentProuction/riddle/index'))
 const MenuDemo = LoadableComponent(()=>import('../../routes/ContentProuction/tidyProcess/index'))
 const StepsDemo = LoadableComponent(()=>import('../../routes/ContentProuction/OnLineScheduling/index'))
@@ -19,7 +19,7 @@ const FormDemo1 = LoadableComponent(()=>import('../../routes/Entry/FormDemo/Form
 const FormDemo2 = LoadableComponent(()=>import('../../routes/Entry/FormDemo/FormDemo2'))
 const UploadDemo = LoadableComponent(()=>import('../../routes/Entry/UploadDemo/index'))
 
-//在下干预组件
+//在线干预组件
 const CommentPreserver = LoadableComponent(()=>import('../../routes/OnlineIntervene/CommentPreserver/index'))
 const LogoffAndTOP = LoadableComponent(()=>import('../../routes/OnlineIntervene/LogoffAndTOP/index'))
 
@@ -56,7 +56,7 @@ class ContentMain extends React.Component {
           <PrivateRoute exact path='/home' component={Home}/>
 
 
-
+            {/*上线审核与排期*/}
           <PrivateRoute exact path='/onlineIntervene/commentPreserver' component={CommentPreserver}/>
           <PrivateRoute exact path='/onlineIntervene/logoffandtop' component={LogoffAndTOP}/>
 
@@ -64,6 +64,8 @@ class ContentMain extends React.Component {
           <PrivateRoute exact path='/home/general/button' component={ButtonDemo}/>
           <PrivateRoute exact path='/home/general/icon' component={IconDemo}/>
 
+
+          {/*/ 内容生产组件/d*/}
           <PrivateRoute exact path='/dropdown' component={DropdownDemo}/>
           <PrivateRoute exact path='/menu' component={MenuDemo}/>
           <PrivateRoute exact path='/steps' component={StepsDemo}/>
