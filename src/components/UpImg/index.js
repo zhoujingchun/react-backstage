@@ -54,7 +54,7 @@ class PicturesWall extends React.Component {
         }
         console.log(lastList);
 
-        axios.put(' http://api-evo-admin.mars-health.com/raw-post-up-pic',{
+        axios.put('/raw-post-up-pic',{
             filename:"F",
             filepath:"f"
         }).then(res=>{
@@ -78,7 +78,7 @@ class PicturesWall extends React.Component {
         return (
             <div className="clearfix">
                 <Upload
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    action="/raw-post-up-pic"
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.handlePreview}

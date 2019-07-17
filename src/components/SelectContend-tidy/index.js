@@ -22,7 +22,7 @@ const {Option} = Select;
 
 //设置
 const statusArray = [
-    ["原料", "原料待定"], ["粗料待定", "粗料"], ["细料待定", "细料", "不可上线", "预上线"], ["垃圾"]
+    ["原料", "原料待定"], ["粗料待定", "粗料"], ["细料待定", "细料", "不可上线", "预上线","细料返工"], ["垃圾"]
 ];
 
 
@@ -91,7 +91,7 @@ class SelectConten extends Component {
         console.log(value);
 
 
-        axios.get(' http://api-evo-admin.mars-health.com/search_status?page=' + page + '&type=' + value[0] + "&status=" + value[1]).then(res => {
+        axios.get('/search_status?page=' + page + '&type=' + value[0] + "&status=" + value[1]).then(res => {
             //console.log(res.data.data)
             return res.data.data
         }).then(data => {
@@ -167,7 +167,7 @@ class SelectConten extends Component {
         value = this.parseStatus(value);
 
 
-        axios.get(' http://api-evo-admin.mars-health.com/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
+        axios.get('/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
             //console.log(res.data.data)
             return res.data.data
         }).then(data => {
@@ -199,12 +199,17 @@ class SelectConten extends Component {
                 break;
             case  "细料":
                 return [2, 1];
+            case "今日细料":
+
+                return [2,1];
                 break;
             case  "不可上线":
                 return [2, 2];
                 break;
             case  "预上线":
                 return [2, 3];
+             case  "细料返工":
+                return [2, 4];
                 break;
             default:
                 return [3, 0]
@@ -223,7 +228,7 @@ class SelectConten extends Component {
         }
 
         let value = this.parseStatus(currentValue);
-        axios.put(' http://api-evo-admin.mars-health.com/raw-post-update-status', {
+        axios.put('/raw-post-update-status', {
             type: value[0],
             status: value[1],
             id: selectedRowKeys
@@ -277,7 +282,7 @@ class SelectConten extends Component {
                         <Option value="粗料待定">粗料待定</Option>
                         <Option value="今日细料">今日细料</Option>
                         <Option value="细料返工">细料返工</Option>
-                        <Option value="细料返工">今日垃圾</Option>
+                        <Option value="今日垃圾">今日垃圾</Option>
                     </Select>
 
 
