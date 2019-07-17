@@ -35,7 +35,12 @@ class SelectConten extends Component {
             inputValue: "",
             visible: false,//对话框变量
             currentStatus: "",
-            selectedRowKeys: []
+            selectedRowKeys: [],
+            pagination:{
+                current:1,
+                total:200
+            },
+            loading:false
 
 
         }
@@ -61,7 +66,16 @@ class SelectConten extends Component {
 
     //底部分页点击后的事件
     handleTableChange({current, pageSize}){
-        console.log(current)
+        let  { pagination,loading}=this.state;
+        pagination.current=current;
+
+
+        this.setState({ pagination:pagination});
+        console.log(current);
+        this.setState({
+            loading:true
+        })
+
         this.getList(current)
 
 
@@ -85,6 +99,10 @@ class SelectConten extends Component {
             return res.data.data
         }).then(data => {
             this.setTableList(data)
+        }).then(()=>{
+            this.setState({
+                loading:false
+            })
         })
 
 
@@ -187,6 +205,12 @@ class SelectConten extends Component {
     handleSelChangeTwo(currentValue) {
 
         let {selectedRowKeys, dataList} = this.state;
+
+
+        if(!selectedRowKeys.length){
+            return
+        }
+
 
         let value = this.parseStatus(currentValue);
         axios.put('/raw-post-update-status', {
@@ -330,8 +354,8 @@ class SelectConten extends Component {
                            placeholder="      Input Value"/>
                     {
                         cate == 1 ?
-                            <Select onChange={this.handleSelChangeTwo.bind(this)}
-                                    style={{marginLeft: "30px", width: 300, flexGrow: 0}} placeholder="粗料/垃圾/原料待定"
+                            <Select autoClearSearchValue={false} value="标记为"  autoFocus={false} allowClear={true}  onChange={this.handleSelChangeTwo.bind(this)}
+                                    style={{marginLeft: "30px",color:"#ccc", width: 300, flexGrow: 0}} placeholder="粗料/垃圾/原料待定"
                                    >
 
                                 <Option value="粗料">粗料</Option>
@@ -386,7 +410,7 @@ class SelectConten extends Component {
                 <div style={{marginTop: "30px"}}>
 
                     {/*将父级的data传给表格*/}
-                    <Table handleTableChange={this.handleTableChange.bind(this)}  getSelectedRowKeys={this.getSelectedRowKeys.bind(this)} dataList={this.state.dataList}
+                    <Table   loading={this.state.loading}   pagination={this.state.pagination}  handleTableChange={this.handleTableChange.bind(this)}  getSelectedRowKeys={this.getSelectedRowKeys.bind(this)} dataList={this.state.dataList}
                            cate={cate}/>
                 </div>
 

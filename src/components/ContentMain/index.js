@@ -12,7 +12,7 @@ const IconDemo = LoadableComponent(()=>import('../../routes/General/IconDemo/ind
 //导航组件Demo
 const DropdownDemo = LoadableComponent(()=>import('../../routes/ContentProuction/riddle/index'))
 const MenuDemo = LoadableComponent(()=>import('../../routes/ContentProuction/tidyProcess/index'))
-const StepsDemo = LoadableComponent(()=>import('../../routes/ContentProuction/StepsDemo/index'))
+const StepsDemo = LoadableComponent(()=>import('../../routes/ContentProuction/OnLineScheduling/index'))
 
 //输入组件Demo
 const FormDemo1 = LoadableComponent(()=>import('../../routes/Entry/FormDemo/FormDemo1'))
@@ -57,16 +57,16 @@ class ContentMain extends React.Component {
 
 
 
-          <PrivateRoute exact path='/home/onlineIntervene/commentPreserver' component={CommentPreserver}/>
-          <PrivateRoute exact path='/home/onlineIntervene/logoffandtop' component={LogoffAndTOP}/>
+          <PrivateRoute exact path='/onlineIntervene/commentPreserver' component={CommentPreserver}/>
+          <PrivateRoute exact path='/onlineIntervene/logoffandtop' component={LogoffAndTOP}/>
 
 
           <PrivateRoute exact path='/home/general/button' component={ButtonDemo}/>
           <PrivateRoute exact path='/home/general/icon' component={IconDemo}/>
 
-          <PrivateRoute exact path='/home/navigation/dropdown' component={DropdownDemo}/>
-          <PrivateRoute exact path='/home/navigation/menu' component={MenuDemo}/>
-          <PrivateRoute exact path='/home/navigation/steps' component={StepsDemo}/>
+          <PrivateRoute exact path='/dropdown' component={DropdownDemo}/>
+          <PrivateRoute exact path='/menu' component={MenuDemo}/>
+          <PrivateRoute exact path='/steps' component={StepsDemo}/>
 
           <PrivateRoute exact path='/home/entry/form/basic-form' component={FormDemo1}/>
           <PrivateRoute exact path='/home/entry/form/step-form' component={FormDemo2}/>

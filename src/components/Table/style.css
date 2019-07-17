@@ -44,6 +44,11 @@ tr td:nth-child(4) div{
 
 
 }
+tr td:nth-child(4) {
+   position: relative;
+
+
+}
 
 
 .ant-table table {

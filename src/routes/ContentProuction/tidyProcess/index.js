@@ -22,7 +22,7 @@ class MenuDemo extends React.Component {
       <div>
         <CustomBreadcrumb arr={['内容生产','精筛加工']}/>
         <TypingCard   cate="2" source={cardContent} height={30}/>
-        <SelectContenTidy cate="2" />
+        <SelectContenTidy  />
 
       </div>
     )

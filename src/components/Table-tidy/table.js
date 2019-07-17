@@ -137,18 +137,19 @@ class EditableTable extends React.Component {
 
         this.columns = [
             {
-                title: 'video',
+                title: '视频',
                 dataIndex: 'video',
 
             },
-              {
-                  title: '头图',
-                dataIndex: 'headImg',
+            {
+                title: '头图',
+                dataIndex: 'img',
 
             },
 
+
             {
-                title: '描述',
+                title: '标题',
                 dataIndex: 'describe',
                 editable: true,
 
@@ -203,10 +204,7 @@ class EditableTable extends React.Component {
 
             loading: false,
             current:1,//当前所在的页数
-            pagination:{
-                current:1,
-                total:100
-            }
+
         }
 
     }
@@ -347,7 +345,7 @@ class EditableTable extends React.Component {
 
                     loading={this.state.loading}
                     rowKey={record =>record.id}
-                    pagination={this.state.pagination}
+                    pagination={this.props.pagination}
 
                     rowSelection={rowSelection}
                     onChange={this.props.handleTableChange}

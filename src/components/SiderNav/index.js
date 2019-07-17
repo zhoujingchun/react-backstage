@@ -12,11 +12,11 @@ const menus = [
   {
     title: '内容生产',
     icon: 'bars',
-    key: '/home/navigation',
+    key: '/',
     subs: [
-      {key: '/home/navigation/dropdown', title: '-粗筛', icon: ''},
-      {key: '/home/navigation/menu', title: '-精筛加工', icon: ''},
-      {key: '/home/navigation/steps', title: '-上线审核与排期', icon: ''},
+      {key: '/dropdown', title: '-粗筛', icon: ''},
+      {key: '/menu', title: '-精筛加工', icon: ''},
+      {key: '/steps', title: '-上线审核与排期', icon: ''},
     ]
   },
   {

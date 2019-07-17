@@ -2,6 +2,7 @@ import React from 'react'
 import {Card, Col, Row, Radio, Icon, Button, Steps, message,BackTop} from 'antd'
 import CustomBreadcrumb from "../../../components/CustomBreadcrumb/index";
 import TypingCard from '../../../components/TypingCard'
+import SelectContenTidy from "../../../components/SelectContend-tidy";
 
 
 class StepsDemo extends React.Component {
@@ -26,6 +27,7 @@ class StepsDemo extends React.Component {
       <div>
         <CustomBreadcrumb arr={['内容生产', '上线审核与排期']}/>
         <TypingCard cate="3" source={cardContent}/>
+          <SelectContenTidy cate="2" />
       </div>
     )
   }

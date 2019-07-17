@@ -21,14 +21,21 @@
 .select-content{
     clear: both;
     display: flex;}
-img{
 
-    width: 100px;
-    height: 80px;
-}
 
 .ant-spin-container {
     position: relative;
     zoom: 1;
     overflow-x: scroll;
+}
+.video-container{
+    position: relative;
+}
+.vieo-update{
+
+    left: 0;
+    top: 0px;
+    z-index: 1;
+    width: 258px;
+
 }

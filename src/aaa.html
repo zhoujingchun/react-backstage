@@ -7,7 +7,22 @@
 <body>
 
 <script>
-
+   /* CREATE TABLE `raw_posts` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `tag_id` int(11) DEFAULT NULL,
+        `cate_id` int(11) DEFAULT NULL,
+        `source_id` tinyint(4) DEFAULT NULL,
+        `source_up` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `source_station` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `end_edit_user_id` int(11) DEFAULT NULL,
+        `data` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `type` tinyint(4) NOT NULL DEFAULT '0',
+        `status` int(11) NOT NULL DEFAULT '0',
+        `created_at` timestamp NULL DEFAULT NULL,
+        `updated_at` timestamp NULL DEFAULT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=15520 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;*/
 
  function   parseStatus(value){
         console.log(value)
@@ -44,10 +59,21 @@
         }
 
     }
-    console.log(parseStatus("粗料"))
-    console.log(parseStatus("原料待定"))
-    console.log(parseStatus("预上线"))
-    console.log(parseStatus("不可上线"))
+
+
+
+ function  parseTime(data){
+       let time='';
+       let min="";
+       let s="";
+       if(data>60){
+           min=parseInt(data/60);
+           s=data%60
+       }
+       time=min+"分"+s+"秒"
+        return  time
+   }
+    console.log(parseTime(800))
 </script>
 
 </body>

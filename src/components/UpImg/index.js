@@ -1,6 +1,6 @@
 import { Upload, Icon, Modal } from 'antd';
 import React, {Component} from 'react';
-
+import axios from "axios"
 function getBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -14,12 +14,13 @@ class PicturesWall extends React.Component {
     state = {
         previewVisible: false,
         previewImage: '',
-        fileList: [
+        fileList:
+            [
             {
                 uid: '-1',
                 name: 'xxx.png',
                 status: 'done',
-                url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                url: this.props.url,
             },
         ],
     };
@@ -27,6 +28,8 @@ class PicturesWall extends React.Component {
     handleCancel = () => this.setState({ previewVisible: false });
 
     handlePreview = async file => {
+        console.log(file);
+
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj);
         }
@@ -37,7 +40,31 @@ class PicturesWall extends React.Component {
         });
     };
 
-    handleChange = ({ fileList }) => this.setState({ fileList });
+    handleChange = ({ fileList }) =>{
+
+
+
+
+        let lastList=[];
+        lastList.push(fileList.pop());
+
+        if(!lastList[0]){
+            lastList=[]
+        }
+        console.log(lastList);
+
+        axios.put('/raw-post-up-pic',{
+            filename:"F",
+            filepath:"f"
+        }).then(res=>{
+            console.log(res)
+        });
+
+        this.setState(
+            { fileList:lastList}
+        )
+
+    };
 
     render() {
         const { previewVisible, previewImage, fileList } = this.state;

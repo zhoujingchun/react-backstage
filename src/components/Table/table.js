@@ -142,7 +142,7 @@ class EditableTable extends React.Component {
 
             },
             {
-                title: '描述',
+                title: '标题',
                 dataIndex: 'describe',
                 editable: true,
 
@@ -192,13 +192,8 @@ class EditableTable extends React.Component {
         this.state = {
             selectedRowKeys: [], // Check here to configure the default column
             data: [],
-
-            loading: false,
             current:1,//当前所在的页数,
-            pagination:{
-                current:1,
-                total:200
-            }
+
 
         }
 
@@ -337,15 +332,16 @@ class EditableTable extends React.Component {
 
                 <Table
 
-                    loading={this.state.loading}
+                    loading={this.props.loading}
                     rowKey={record =>record.id}
-                    pagination={this.state.pagination}
+                    pagination={this.props.pagination}
 
                     rowSelection={rowSelection}
                     onChange={this.props.handleTableChange}
 
                     components={components}
                     rowClassName={() => 'editable-row'}
+                    bordered
 
 
                     dataSource={data}

@@ -8,3 +8,11 @@
     margin-top: 8px;
     color: #666;
 }
+.anticon-delete{
+
+
+
+}
+.ant-upload-list-item-actions i{
+    display: none;
+}
