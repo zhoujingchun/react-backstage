@@ -42,7 +42,8 @@ class SelectConten extends Component {
                 current:1,
                 total:100
             },
-            loading:false
+            loading:false,
+            select:[]
 
 
         }
@@ -188,6 +189,8 @@ class SelectConten extends Component {
         this.setState({pagination})
 
         this.getList(1,currentValue)
+
+
 
 
     }

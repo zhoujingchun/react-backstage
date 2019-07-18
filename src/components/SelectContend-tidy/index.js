@@ -39,6 +39,7 @@ class SelectConten extends Component {
             inputValue: "",
             visible: false,//对话框变量
             currentStatus: "",
+            currentValue:"",
             selectedRowKeys: [],
             pagination: {
                 current: 1,
@@ -88,8 +89,8 @@ class SelectConten extends Component {
         //     }).then(res => {
         //     this.setTableList(res);
         // })
-        value=value?value:"原料"
-         value = this.parseStatus("粗料");
+        value=value?value:"粗料"
+         value = this.parseStatus(value);
         console.log(value);
 
 
