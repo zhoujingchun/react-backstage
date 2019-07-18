@@ -3,6 +3,7 @@ import {Select, Input, InputNumber, Modal} from 'antd'
 import Table from '../Table/table'
 import './style.css'
 import axios from "axios";
+import RadioSelect from '../RadioSelect/index'
 
 
 const {Option} = Select;
@@ -35,10 +36,11 @@ class SelectConten extends Component {
             inputValue: "",
             visible: false,//对话框变量
             currentStatus: "",
+            currentValue: "",
             selectedRowKeys: [],
             pagination:{
                 current:1,
-                total:200
+                total:100
             },
             loading:false
 
@@ -58,6 +60,7 @@ class SelectConten extends Component {
 
     // 修改 selectedRowKeys
     getSelectedRowKeys(value) {
+        console.log(value)
         this.setState({
             selectedRowKeys: value
         })
@@ -65,22 +68,21 @@ class SelectConten extends Component {
     }
 
     //底部分页点击后的事件
-    handleTableChange({current, pageSize}){
-        let  { pagination,loading}=this.state;
-        pagination.current=current;
 
+    handleTableChange({current, pageSize}) {
+        let {pagination,currentValue} = this.state;
+        pagination.current = current;
+        console.log(currentValue)
+        pagination.total = pageSize+pagination.total;
 
-        this.setState({ pagination:pagination});
-        console.log(current);
-        this.setState({
-            loading:true
-        })
-
-        this.getList(current)
-
-
+        this.setState({pagination: pagination})
+        console.log(current)
+        this.getList(current,currentValue)
     }
-    getList(page) {
+
+
+    //获取首页
+    getList(page,value) {
 
         // axios.get('/getlist?page='+page)
         //     .then(res => {
@@ -89,15 +91,19 @@ class SelectConten extends Component {
         //     }).then(res => {
         //     this.setTableList(res);
         // })
+        value=value?value:"原料"
 
-        let   value = this.parseStatus("原料");
+        let   value1 = this.parseStatus(value);
         console.log(value);
 
 
-        axios.get('/search_status?page='+page+'&type=' + value[0] + "&status=" + value[1]).then(res => {
-            //console.log(res.data.data)
+        axios.get('/search_status?page='+page+'&type=' + value1[0] + "&status=" + value1[1]).then(res => {
+
+           console.log(res);
+
             return res.data.data
         }).then(data => {
+
             this.setTableList(data)
         }).then(()=>{
             this.setState({
@@ -109,28 +115,51 @@ class SelectConten extends Component {
     }
 
 
+    parseTags(data) {
+        let tags = [];
+        data.forEach(item => {
+            tags.push(item.title)
+        });
 
+        return tags
 
-    setTableList(res) {
+    }
+    parseTime(data) {
+        let time = '';
+        let min = "";
+        let s = "";
+        if (data > 60) {
+            min = parseInt(data / 60);
+            s = data % 60
+        }
+        time = min + "分" + s + "秒";
+        return time
+
+    }
+        setTableList(res) {
         console.log(res);
         console.log(statusArray[0][0]);
 
         const data = [];
         res.forEach((res, index) => {
-
+            res.data = eval('(' + res.data + ')');
+            // res.updated_at.slice(0, 13).replace(/\s|-/g, "/") created_at
+            let firstTime=res.created_at.slice(0, 13).replace(/\s|-/g, "/");
+            let lastTime=res.updated_at?res.created_at.slice(0, 13).replace(/\s|-/g, "/"):"";
+            let tags = this.parseTags(res.tags)
 
             data.push({
 
                 'describe': res.title,
-                'video': <video className="video" controls src={res.data.url}></video>,
-                "firstTime": "",
-                "lastTime": "",
+                'headImg': <img src={res.data.thumb} alt=""/>    ,
+                "firstTime": res.created_at,
+                "lastTime": res.updated_at,
                 "name": res.name,
                 "status": statusArray[res.type][res.status],
-                "duration": res.data.duration,
+                "duration": this.parseTime(res.data.duration) ,
                 "remake_name": res.end_edit_user_id,
                 "label": res.tags.title,
-                "oringn": "源站 :" + res.source_station + "  源UP " + res.source_up,
+                "oringn": "源站 :" + "bilibili" + "  源UP " + res.source_up,
                 "sort": res.sort,
                 "id": res.id
 
@@ -144,28 +173,30 @@ class SelectConten extends Component {
     }
 
 
-    // 选择状态框选中后的事件
+    //点击不同状态获取列表
     handleChange(value) {
+        let currentValue=value;
+        console.log('ddadada')
+
+        this.setState({
+            currentValue:currentValue,
+        })
+
         value = this.parseStatus(value);
 
+        let  pagination={current:1, total:100}
+        this.setState({pagination})
 
-       this.getListByStatus(0,value)
+        this.getList(1,currentValue)
 
 
     }
 
-    getListByStatus(page,value){
-        axios.get('/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
-            //console.log(res.data.data)
-            return res.data.data
-        }).then(data => {
-            this.setTableList(data)
-        })
-    }
+
 
 
     parseStatus(value) {
-        console.log(value)
+        console.log(value);
         switch (value) {
             case "原料待定":
                 return [0, 1];
@@ -180,7 +211,7 @@ class SelectConten extends Component {
                 return [1, 1];
                 break;
             case "今日粗料":
-                return [1, 1];
+                return [1, 1,"sign"];
             case "细料待定":
                 return [2, 0];
                 break;
@@ -192,6 +223,9 @@ class SelectConten extends Component {
                 break;
             case  "预上线":
                 return [2, 3];
+                break;
+            case  "今日垃圾":
+                return [3, 0,"sign"];
                 break;
             default:
                 return [3,0]
@@ -243,51 +277,9 @@ class SelectConten extends Component {
 
 
     //对话框ok，与cancel 事件
-    handleOk() {
-
-        let {selectedRowKeys, dataList, currentStatus} = this.state;
 
 
 
-        let value = this.parseStatus(currentStatus);
-
-        let id = [];
-
-        //获取id 数组
-
-       console.log(id)
-        axios.put('/raw-post-update-status', {
-            type: value[0],
-            status: value[1],
-            id:selectedRowKeys
-        })
-            .then(
-                res => {
-
-                    return res.data.data
-                }
-            ).then(res => {
-
-            this.setTableList(res);
-
-        })
-            .then(() => {
-
-                this.setState({
-                    visible: false            //关闭提示框
-                })
-
-            })
-
-
-
-    }
-
-    handleCancel() {
-        this.setState({
-            visible: false
-        })
-    }
 
 
     render() {
@@ -307,44 +299,7 @@ class SelectConten extends Component {
 
 
                     {
-                        cate == 1 ?
-                            <Select  onChange={this.handleChange.bind(this)} style={{width: 300, flexGrow: 0}}
-                                    placeholder="原料/原料待定/今日垃圾/今日原料" >
-
-
-                                <Option value="原料">原料</Option>
-                                <Option value="原料待定">原料待定</Option>
-                                <Option value="今日垃圾">今日垃圾</Option>
-                                <Option value="今日粗料">今日粗料</Option>
-
-
-                            </Select> :
-                            cate == "2" ?
-                                <Select showSearch style={{width: 300, flexGrow: 0}} placeholder="粗料/粗料待定/今日细料/细料反工"
-                                        optionFilterProp="children">
-
-                                    <Option value="粗料">粗料</Option>
-                                    <Option value="粗料待定">粗料待定</Option>
-                                    <Option value="今日细料">今日细料</Option>
-                                    <Option value="细料返工">细料返工</Option>
-                                </Select> :
-                                cate == "3" ?
-                                    <Select showSearch style={{width: 300, flexGrow: 0}} placeholder="原料/原料待定/今日垃圾/今日原料"
-                                            optionFilterProp="children">
-
-                                        <Option value="细料">细料</Option>
-                                        <Option value="细料待定">细料待定</Option>
-                                        <Option value="不可上线">不可上线</Option>
-                                        <Option value="今日预上线">今日预上线</Option>
-                                        <Option value="今日上线">今日上线</Option>
-                                    </Select> :
-                                    cate == "4" ?
-                                        <Select showSearch style={{width: 300, flexGrow: 0}} placeholder="线上/今日下线"
-                                                optionFilterProp="children">
-
-                                            <Option value="线上">线上</Option>
-                                            <Option value="线上">线上</Option>
-                                        </Select> : ""
+                        <RadioSelect  cate="1" onChange={this.handleChange.bind(this)}/>
 
 
                     }
@@ -410,7 +365,7 @@ class SelectConten extends Component {
                 <div style={{marginTop: "30px"}}>
 
                     {/*将父级的data传给表格*/}
-                    <Table   loading={this.state.loading}   pagination={this.state.pagination}  handleTableChange={this.handleTableChange.bind(this)}  getSelectedRowKeys={this.getSelectedRowKeys.bind(this)} dataList={this.state.dataList}
+                    <Table     loading={this.state.loading}   pagination={this.state.pagination}  handleTableChange={this.handleTableChange.bind(this)}  getSelectedRowKeys={this.getSelectedRowKeys.bind(this)} dataList={this.state.dataList}
                            cate={cate}/>
                 </div>
 

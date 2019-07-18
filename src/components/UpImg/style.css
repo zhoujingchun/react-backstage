@@ -10,7 +10,7 @@
 }
 .anticon-delete{
 
-
+display: none;
 
 }
 
@@ -24,3 +24,4 @@
     height: 100%;
     position: static
 ;}
+

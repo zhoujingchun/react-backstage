@@ -137,8 +137,8 @@ class EditableTable extends React.Component {
 
         this.columns = [
             {
-                title: 'video',
-                dataIndex: 'video',
+                title: '头图',
+                dataIndex: 'headImg',
 
             },
             {
@@ -203,7 +203,6 @@ class EditableTable extends React.Component {
     componentDidMount() {
 
 
-
     }
     componentWillReceiveProps(nextProps, nextContext) {
 
@@ -211,6 +210,7 @@ class EditableTable extends React.Component {
         this.setState({
             data:nextProps.dataList
         })
+
 
     }
 
@@ -256,6 +256,10 @@ class EditableTable extends React.Component {
         });
         this.setState({ data: newData });
     };
+    cancelSelect(e){
+        console.log(e)
+    }
+
 
     render() {
         const { data ,selectedRowKeys} = this.state;
@@ -293,20 +297,7 @@ class EditableTable extends React.Component {
                         });
                     },
                 },
-                {
-                    key: 'odd',
-                    text: '选择奇数行 ',
-                    onSelect: changableRowKeys => {
-                        let newSelectedRowKeys = [];
-                        newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                            if (index % 2 !== 0) {
-                                return false;
-                            }
-                            return true;
-                        });
-                        this.setState({ selectedRowKeys: newSelectedRowKeys });
-                    },
-                },
+
                 {
                     key: 'even',
                     text: '选择偶数行',
@@ -331,7 +322,7 @@ class EditableTable extends React.Component {
             <div>
 
                 <Table
-
+                    onSelectInvert={this.cancelSelect.bind(this)}
                     loading={this.props.loading}
                     rowKey={record =>record.id}
                     pagination={this.props.pagination}

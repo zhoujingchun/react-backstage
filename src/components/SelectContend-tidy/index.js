@@ -6,7 +6,8 @@ import './style.css'
 import axios from "axios";
 import EditableTagGroup from '../Tags/index'
 import imgUrl from './back.jpg'
-import UpImage from '../UpImg/index'
+import UpImage from '../UpImg/index';
+import RadioSelect from '../RadioSelect/index'
 
 
 const {Option} = Select;
@@ -68,16 +69,17 @@ class SelectConten extends Component {
 
     //底部分页点击后的事件
     handleTableChange({current, pageSize}) {
-        let {pagination} = this.state;
-        pagination.current = current
-
+        let {pagination,currentValue} = this.state;
+        pagination.current = current;
+        console.log(currentValue)
+        pagination.total = pageSize+pagination.total;
 
         this.setState({pagination: pagination})
         console.log(current)
-        this.getList(current)
+        this.getList(current,currentValue)
     }
 
-    getList(page) {
+    getList(page,value) {
 
         // axios.get('/getlist?page='+page)
         //     .then(res => {
@@ -86,8 +88,8 @@ class SelectConten extends Component {
         //     }).then(res => {
         //     this.setTableList(res);
         // })
-
-        let value = this.parseStatus("粗料");
+        value=value?value:"原料"
+         value = this.parseStatus("粗料");
         console.log(value);
 
 
@@ -134,19 +136,21 @@ class SelectConten extends Component {
 
             let tags = this.parseTags(res.tags)
 
-            // res.updated_at.slice(0, 13).replace(/\s|-/g, "/") res.data.thumb
+            //let firstTime=res.created_at.slice(0, 13).replace(/\s|-/g, "/");
+          //  let lastTime=res.created_at?res.created_at.slice(0, 13).replace(/\s|-/g, "/"):"";
+
             data.push({
 
                 'describe': res.title,
                 'video': <div className="video-container">  <video className="video" controls src={res.data.url}></video></div>,
-                "firstTime": "2019/9/3",
-                "lastTime": "2019/10/11",
+                "firstTime":res.created_at,
+                "lastTime":res.updated_at,
                 "name": res.name,
                 "status": statusArray[res.type][res.status],
                 "duration":  this.parseTime(res.data.duration) ,
                 "remake_name": res.end_edit_user_id,
                 "label": <EditableTagGroup id={res.id} tags={tags}/>,
-                "oringn": "源站 :" + res.source_station + "  源UP " + res.source_up,
+                "oringn": "源站 :" + 'bilibili' + "  源UP " + res.source_up,
                 "sort": res.sort,
                 "id": res.id,
                 "img":<div className="vieo-update"><UpImage  url={res.data.thumb} /></div>
@@ -164,15 +168,19 @@ class SelectConten extends Component {
 
     // 选择状态框选中后的事件
     handleChange(value) {
+        let currentValue=value;
+        console.log('ddadada')
+
+        this.setState({
+            currentValue:currentValue,
+        })
+
         value = this.parseStatus(value);
 
+        let  pagination={current:1, total:100}
+        this.setState({pagination})
 
-        axios.get('/search_status/?type=' + value[0] + "&status=" + value[1]).then(res => {
-            //console.log(res.data.data)
-            return res.data.data
-        }).then(data => {
-            this.setTableList(data)
-        })
+        this.getList(1,currentValue)
 
 
     }
@@ -273,17 +281,8 @@ class SelectConten extends Component {
                 <div className="select-content">
 
                     {/*标签部分*/}
+                    <RadioSelect  cate="2" onChange={this.handleChange.bind(this)} />
 
-                    <Select onChange={this.handleChange.bind(this)}  style={{width: 300, flexGrow: 0}}
-                            placeholder="粗料/粗料待定/今日细料/细料反工/今日垃圾"
-                            optionFilterProp="children">
-
-                        <Option value="粗料">粗料</Option>
-                        <Option value="粗料待定">粗料待定</Option>
-                        <Option value="今日细料">今日细料</Option>
-                        <Option value="细料返工">细料返工</Option>
-                        <Option value="今日垃圾">今日垃圾</Option>
-                    </Select>
 
 
                     <Input onPressEnter={this.handleInput.bind(this)} style={{width: 200, marginLeft: "30px"}}

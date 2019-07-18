@@ -57,3 +57,8 @@ tr td:nth-child(4) {
 
 
 }
+.ant-spin-container {
+    position: relative;
+    zoom: 1;
+    overflow-x: scroll;
+}

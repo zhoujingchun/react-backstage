@@ -23,4 +23,8 @@
     clear: both;
     display: flex;
 }
+img{
+    width: 200px;
+    height: 80px;
+}
 
